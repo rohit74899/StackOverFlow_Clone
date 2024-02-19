@@ -24,6 +24,10 @@ import {  useEffect, useState } from "react";
 import Sidebar from './Sidebar';
 import Main from './Main';
 import { blue } from '@material-ui/core/colors';
+
+
+// New Component Test
+import Tags from './Pages/Tags'
 const drawerWidth = 210;
 
 export default function ClippedDrawer({questions}) {
@@ -54,8 +58,9 @@ export default function ClippedDrawer({questions}) {
         <Grid item xs={8} >
                 
                 <Toolbar />
-                Component 2
-                <Main questions={questions} />
+                
+                {/* <Main questions={questions} /> */}
+                <Tags/>
                 
         </Grid>
     

@@ -39,17 +39,17 @@ export default function NestedList() {
       }
     >
       <ListItemButton>
-        <ListItemIcon>
-          <HomeIcon />
-        </ListItemIcon>
-        <ListItemText primary="Home" />
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
       </ListItemButton>
 
       <ListItemButton>
-        <ListItemIcon>
-          <Groups2Icon />
-        </ListItemIcon>
-        <ListItemText primary="Community" />
+            <ListItemIcon>
+              <Groups2Icon />
+            </ListItemIcon>
+            <ListItemText primary="Community" />
       </ListItemButton>
 
       <ListItemButton onClick={handleClick}>
@@ -62,22 +62,22 @@ export default function NestedList() {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <QuestionAnswerIcon />
-            </ListItemIcon>
-            <ListItemText primary="Questions" />
+                <ListItemIcon>
+                  <QuestionAnswerIcon />
+                </ListItemIcon>
+                <ListItemText primary="Questions" />
           </ListItemButton>
           <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <StyleIcon />
-            </ListItemIcon>
-            <ListItemText primary="Tags" />
+                <ListItemIcon>
+                  <StyleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Tags" />
           </ListItemButton>
           <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <GroupIcon />
-            </ListItemIcon>
-            <ListItemText primary="Users" />
+                <ListItemIcon>
+                  <GroupIcon />
+                </ListItemIcon>
+                <ListItemText primary="Users" />
           </ListItemButton>
         </List>
       </Collapse>
