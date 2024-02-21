@@ -19,14 +19,18 @@ import Groups2Icon from '@mui/icons-material/Groups2';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import StyleIcon from '@mui/icons-material/Style';
 import GroupIcon from '@mui/icons-material/Group';
+import { Link } from "react-router-dom";
 
-export default function NestedList() {
+export default function NestedList({ onPageChange }) {
   const [open, setOpen] = React.useState(true);
 
   const handleClick = () => {
     setOpen(!open);
   };
 
+  const handlePageChange = (page) => {
+    onPageChange(page);
+  };
   return (
     <List
       sx={{ width: '100%', maxWidth: 360, bgcolor: '#3a4bb7', color:'white', margin:0}}
@@ -38,14 +42,14 @@ export default function NestedList() {
         </ListSubheader>
       }
     >
-      <ListItemButton>
+      <ListItemButton onClick={() => handlePageChange('Home')}>
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
             <ListItemText primary="Home" />
       </ListItemButton>
 
-      <ListItemButton>
+      <ListItemButton onClick={() => handlePageChange('Community')}>
             <ListItemIcon>
               <Groups2Icon />
             </ListItemIcon>
@@ -61,19 +65,26 @@ export default function NestedList() {
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton sx={{ pl: 4 }} onClick={() => handlePageChange('Questions')}>
                 <ListItemIcon>
                   <QuestionAnswerIcon />
                 </ListItemIcon>
                 <ListItemText primary="Questions" />
           </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }}>
-                <ListItemIcon>
-                  <StyleIcon />
-                </ListItemIcon>
-                <ListItemText primary="Tags" />
-          </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }}>
+
+
+          
+            <ListItemButton sx={{ pl: 4 ,color: 'white'}} onClick={() => handlePageChange('Tags')}>
+                    <ListItemIcon>
+                      <StyleIcon />
+                    </ListItemIcon>
+                  
+                  <ListItemText primary="Tags" />
+            </ListItemButton>
+          
+
+
+          <ListItemButton sx={{ pl: 4 }} onClick={() => handlePageChange('Users')}>
                 <ListItemIcon>
                   <GroupIcon />
                 </ListItemIcon>

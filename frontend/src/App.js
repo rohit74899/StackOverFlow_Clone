@@ -9,6 +9,7 @@ import StackOverflow from "./components/StackOverflow";
 import Header from "./components/Header";
 import AddQuestion from "./components/AddQuestion";
 import ViewQuestion from "./components/ViewQuestion";
+import Tags from "./components/StackOverflow/Pages/Tags";
 import Auth from "./components/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout, selectUser } from "./feature/userSlice";
@@ -66,6 +67,7 @@ function App() {
           <PrivateRoute exact path="/" component={StackOverflow} />
           <PrivateRoute exact path="/add-question" component={AddQuestion} />
           <PrivateRoute exact path="/question" component={ViewQuestion} />
+          <PrivateRoute exact path="/tags" component={Tags} />
         </Switch>
       </Router>
     </div>

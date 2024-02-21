@@ -16,11 +16,12 @@ function Index() {
     }
     getQuestion();
   }, []);
+  
   return (
     <div className="stack-index">
       <div className="stack-index-content">
-        {/* <Sidebar />
-        <Main questions={questions} /> */}
+        {/* <Sidebar /> */}
+        {/* <Main questions={questions} /> */}
         <NewDrawer questions={questions}/>
       </div>
     </div>

@@ -28,9 +28,18 @@ import { blue } from '@material-ui/core/colors';
 
 // New Component Test
 import Tags from './Pages/Tags'
+import Home from './Pages/Home';
+import Questions from './Pages/Questions'
+import Community from './Pages/Community';
+import Users from './Pages/Users'
 const drawerWidth = 210;
 
 export default function ClippedDrawer({questions}) {
+
+  const [page,setpage]=useState('Home');
+
+  const options=['Home','Community','Questions','Tags','Users'];
+
   return (
 
     <Grid container spacing={2}>
@@ -50,7 +59,7 @@ export default function ClippedDrawer({questions}) {
                     >
                     <Toolbar />
                     {/* <Sidebar />    */}
-                     <Nsidebar/>
+                     <Nsidebar onPageChange={setpage}/>
                     </Drawer>
                 
         </Grid>
@@ -59,8 +68,20 @@ export default function ClippedDrawer({questions}) {
                 
                 <Toolbar />
                 
-                {/* <Main questions={questions} /> */}
-                <Tags/>
+                {page === 'Home' ? (
+                  <Main questions={questions} />
+                ) : page === 'Community' ? (
+                  <Community />
+                ) : page === 'Tags' ? (
+                  <Tags />
+                ) : page === 'Questions' ? (
+                  <Main questions={questions} />
+                ) : page === 'Users' ? (
+                  <Users />
+                ) : null}
+                
+                
+                
                 
         </Grid>
     
