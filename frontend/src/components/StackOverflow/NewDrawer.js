@@ -24,7 +24,9 @@ import {  useEffect, useState } from "react";
 import Sidebar from './Sidebar';
 import Main from './Main';
 import { blue } from '@material-ui/core/colors';
+import Autocomplete from '@mui/material/Autocomplete';
 
+import TextField from '@mui/material/TextField';
 
 // New Component Test
 import Tags from './Pages/Tags'
@@ -45,25 +47,29 @@ const drawerWidth = 210;
 export default function ClippedDrawer({questions}) {
   
   
+  // for prefere Tags input
+  const [ptags, setpTags] = useState(["c++", "java", "npm", "error", "DSA","JDK","DP","NodeJs","Maths","Marathi","Hindi"]);
+  const [selectedTags, setSelectedTags] = useState([]);
+
+const handleTagChange_ForPreferedTags = (_, newValue) => {
+  // Update the selected ptags without triggering onTagsChange immediately
+  // console.log("value",newValue);
+  setSelectedTags(newValue);
+};
+
+const handleSearchClick_ForPreferedTags = () => {
+  console.log(selectedTags);
+  console.log("filterTag page");
+};
+  
+// ******************************************************
+
+
   // const [page, setPage] = useState('Home');
   const [page, setpage] = useState('Home'); 
   const [tag, setTag] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [filteredQuestions, setFilteredQuestions] = useState(questions);
-
-  useEffect(() => {
-    // Filter questions based on tags and searchInput
-    const filtered = questions.filter((question) => {
-      const hasTag =
-        tag.length === 0 || tag.every((selectedTag) => question.tags.includes(selectedTag));
-      const matchesSearch =
-        question.title.toLowerCase().includes(searchInput.toLowerCase()) ||
-        question.body.toLowerCase().includes(searchInput.toLowerCase());
-      return hasTag && matchesSearch;
-    });
-    console.log("Filtered Questions:", filtered);
-    setFilteredQuestions(filtered);
-  }, [questions, tag, searchInput]);
 
   const handleTagChange = (value) => {
     setTag(value);
@@ -73,56 +79,55 @@ export default function ClippedDrawer({questions}) {
     setSearchInput(event.target.value);
   };
 
-  // const handleSearchClick = () => {
-  //   // Handle search click if needed
-  // };
+
 
   const handleSearchClick = () => {
     // Perform the search only when the submit button is clicked
-  console.log("Selected Tags:", tag);
-  console.log("Search Input:", searchInput);
+              console.log("Selected Tags:", tag);
+              console.log("Search Input:", searchInput);
+              console.log("Selected Tags:", tag);
+              console.log("predered tags selected",selectedTags);
+              
+              if (searchInput.trim() === '' && selectedTags.length === 0 ) {
+                // If both search input and tags are empty, display all questions
+                  setFilteredQuestions(questions);
+              } else {
+                // Perform the search only when the submit button is clicked
+                const formattedTag = JSON.stringify(selectedTags);
+                console.log("tags we get as input", formattedTag);
+                const arrayOfStrings = JSON.parse(formattedTag);
+                console.log(arrayOfStrings[0]);
 
-  
-  if (searchInput.trim() === '' && tag.length === 0) {
-    // If both search input and tags are empty, display all questions
-    setFilteredQuestions(questions);
-  } else {
-    // Perform the search only when the submit button is clicked
-    const formattedTag = JSON.stringify(tag);
-    console.log("tags we get as input", formattedTag);
-    const arrayOfStrings = JSON.parse(formattedTag);
-    console.log(arrayOfStrings[0]);
 
+                const filtered = questions.filter((question) => {
+                          // Log the tags for debugging
+                          console.log("Question Tags:", question.tags);
 
-    const filtered = questions.filter((question) => {
-    // Log the tags for debugging
-    console.log("Question Tags:", question.tags);
+                          // Assuming you are only selecting one tag at a time
+                          // Parse the tags if stored as a stringified array
+                          const questionTags =
+                              typeof question.tags === 'string' ? JSON.parse(question.tags) : question.tags;
 
-    // Assuming you are only selecting one tag at a time
-    // Parse the tags if stored as a stringified array
-    const questionTags =
-        typeof question.tags === 'string' ? JSON.parse(question.tags) : question.tags;
+                          console.log("Parsed Question Tags:", questionTags);
+                          console.log(questionTags[0]);
+                          // Check for the existence of the tag
+                          const hasTag =
+                              tag.length === 0 || questionTags[0].includes(arrayOfStrings[0]);
 
-    console.log("Parsed Question Tags:", questionTags);
-    console.log(questionTags[0]);
-    // Check for the existence of the tag
-    const hasTag =
-        tag.length === 0 || questionTags[0].includes(arrayOfStrings[0]);
+                          const matchesSearch =
+                              searchInput.trim() === '' ||
+                              question.title.toLowerCase().includes(searchInput.toLowerCase()) ||
+                              question.body.toLowerCase().includes(searchInput.toLowerCase()) ||
+                              questionTags.some((questionTag) => questionTag.toLowerCase().includes(searchInput.toLowerCase()));
 
-    const matchesSearch =
-        searchInput.trim() === '' ||
-        question.title.toLowerCase().includes(searchInput.toLowerCase()) ||
-        question.body.toLowerCase().includes(searchInput.toLowerCase()) ||
-        questionTags.some((questionTag) => questionTag.toLowerCase().includes(searchInput.toLowerCase()));
+                          return hasTag && matchesSearch;
+                  });
 
-    return hasTag && matchesSearch;
-});
-
-    // Output the filtered results for further inspection
-    console.log("Filtered Questions:", filtered);
-    console.log("Filtered Questions After Setting State:", filtered);
-    setFilteredQuestions(filtered); 
-  }
+                // Output the filtered results for further inspection
+                console.log("Filtered Questions:", filtered);
+                console.log("Filtered Questions After Setting State:", filtered);
+                setFilteredQuestions(filtered); 
+              }
 
   
   };
@@ -182,6 +187,23 @@ export default function ClippedDrawer({questions}) {
           
           
           {/* <FilterTag onTagsChange={handleTagChange} onSearchChange={handleSearchChange} onSearchClick={handleSearchClick}/> */}
+          <Stack direction="row" spacing={1}>
+      <Autocomplete
+        multiple
+        limitTags={2}
+        id="single-limit-tags"
+        options={ptags}
+        getOptionLabel={(option) => option}
+        defaultValue={[]}
+        renderInput={(params) => (
+          <TextField {...params} label="search" placeholder="Search by Tags" />
+        )}
+        onChange={handleTagChange_ForPreferedTags}
+        sx={{ width: '200px' }}
+      />
+      
+    </Stack>
+    <Button variant="contained" endIcon={<SearchIcon />} sx={{ marginLeft: 8, marginTop: 2 }} onClick={() => handleSearchClick('FilteredQ')}></Button>
           <input
           type="text"
           placeholder="Enter tags"
@@ -189,6 +211,9 @@ export default function ClippedDrawer({questions}) {
           onChange={(e) => setTag(e.target.value.split(','))}
           style={{ marginTop: '10px', width: '80%', padding: '5px' }}
         />
+
+
+        
         {/* Add a submit button */}
         <button onClick={handleSearchClick} style={{ marginTop: '10px', padding: '5px' }}>
           Search
