@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { createContext, useContext ,useEffect, useReducer} from "react";
 import Sidebar from "./Sidebar";
 import "./css/index.css";
 import Main from "./Main";
 import axios from "axios";
 import NewDrawer from "./NewDrawer";
-function Index() {
+
+
+
+function QuestionContext() {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
     async function getQuestion() {
       await axios.get("/api/question").then((res) => {
         setQuestions(res.data.reverse());
-        console.log(res.data)
+        // console.log(res.data)
       });
     }
     getQuestion();
@@ -28,4 +32,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default QuestionContext;

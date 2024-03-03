@@ -32,13 +32,105 @@ import Home from './Pages/Home';
 import Questions from './Pages/Questions'
 import Community from './Pages/Community';
 import Users from './Pages/Users'
+
+
+import FilterTag from './FilterTags/FilterTag';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+
+import SearchIcon from '@mui/icons-material/Search';
+
 const drawerWidth = 210;
 
 export default function ClippedDrawer({questions}) {
+  
+  
+  // const [page, setPage] = useState('Home');
+  const [page, setpage] = useState('Home'); 
+  const [tag, setTag] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
+  const [filteredQuestions, setFilteredQuestions] = useState(questions);
 
-  const [page,setpage]=useState('Home');
+  useEffect(() => {
+    // Filter questions based on tags and searchInput
+    const filtered = questions.filter((question) => {
+      const hasTag =
+        tag.length === 0 || tag.every((selectedTag) => question.tags.includes(selectedTag));
+      const matchesSearch =
+        question.title.toLowerCase().includes(searchInput.toLowerCase()) ||
+        question.body.toLowerCase().includes(searchInput.toLowerCase());
+      return hasTag && matchesSearch;
+    });
+    console.log("Filtered Questions:", filtered);
+    setFilteredQuestions(filtered);
+  }, [questions, tag, searchInput]);
 
-  const options=['Home','Community','Questions','Tags','Users'];
+  const handleTagChange = (value) => {
+    setTag(value);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchInput(event.target.value);
+  };
+
+  // const handleSearchClick = () => {
+  //   // Handle search click if needed
+  // };
+
+  const handleSearchClick = () => {
+    // Perform the search only when the submit button is clicked
+  console.log("Selected Tags:", tag);
+  console.log("Search Input:", searchInput);
+
+  
+  if (searchInput.trim() === '' && tag.length === 0) {
+    // If both search input and tags are empty, display all questions
+    setFilteredQuestions(questions);
+  } else {
+    // Perform the search only when the submit button is clicked
+    const formattedTag = JSON.stringify(tag);
+    console.log("tags we get as input", formattedTag);
+    const arrayOfStrings = JSON.parse(formattedTag);
+    console.log(arrayOfStrings[0]);
+
+
+    const filtered = questions.filter((question) => {
+    // Log the tags for debugging
+    console.log("Question Tags:", question.tags);
+
+    // Assuming you are only selecting one tag at a time
+    // Parse the tags if stored as a stringified array
+    const questionTags =
+        typeof question.tags === 'string' ? JSON.parse(question.tags) : question.tags;
+
+    console.log("Parsed Question Tags:", questionTags);
+    console.log(questionTags[0]);
+    // Check for the existence of the tag
+    const hasTag =
+        tag.length === 0 || questionTags[0].includes(arrayOfStrings[0]);
+
+    const matchesSearch =
+        searchInput.trim() === '' ||
+        question.title.toLowerCase().includes(searchInput.toLowerCase()) ||
+        question.body.toLowerCase().includes(searchInput.toLowerCase()) ||
+        questionTags.some((questionTag) => questionTag.toLowerCase().includes(searchInput.toLowerCase()));
+
+    return hasTag && matchesSearch;
+});
+
+    // Output the filtered results for further inspection
+    console.log("Filtered Questions:", filtered);
+    console.log("Filtered Questions After Setting State:", filtered);
+    setFilteredQuestions(filtered); 
+  }
+
+  
+  };
+
+  useEffect(() => {
+    console.log("Filtered Questions After Setting State:", filteredQuestions);
+  }, [filteredQuestions]);
+
 
   return (
 
@@ -66,23 +158,41 @@ export default function ClippedDrawer({questions}) {
         
         <Grid item xs={8} >
                 
-                <Toolbar />
+        <Toolbar />
+
+        {page === 'Home' ? (
+          <Main questions={filteredQuestions} searchInput={searchInput} />
+        ) : page === 'FilteredQ' ? (
+          <Main questions={filteredQuestions} tags={tag} searchInput={searchInput} />
+        ) : page === 'Community' ? (
+          <Community searchInput={searchInput} />
+        ) : page === 'Tags' ? (
+          <Tags searchInput={searchInput} />
+        ) : page === 'Questions' ? (
+          <Main questions={filteredQuestions} searchInput={searchInput} />
+        ) : page === 'Users' ? (
+          <Users searchInput={searchInput} />
+        ) : null}
                 
-                {page === 'Home' ? (
-                  <Main questions={questions} />
-                ) : page === 'Community' ? (
-                  <Community />
-                ) : page === 'Tags' ? (
-                  <Tags />
-                ) : page === 'Questions' ? (
-                  <Main questions={questions} />
-                ) : page === 'Users' ? (
-                  <Users />
-                ) : null}
                 
                 
                 
-                
+        </Grid>
+        <Grid item xs={2} sx={{marginTop:18}}>
+          
+          
+          {/* <FilterTag onTagsChange={handleTagChange} onSearchChange={handleSearchChange} onSearchClick={handleSearchClick}/> */}
+          <input
+          type="text"
+          placeholder="Enter tags"
+          value={tag.join(',')}
+          onChange={(e) => setTag(e.target.value.split(','))}
+          style={{ marginTop: '10px', width: '80%', padding: '5px' }}
+        />
+        {/* Add a submit button */}
+        <button onClick={handleSearchClick} style={{ marginTop: '10px', padding: '5px' }}>
+          Search
+        </button>
         </Grid>
     
     </Grid>

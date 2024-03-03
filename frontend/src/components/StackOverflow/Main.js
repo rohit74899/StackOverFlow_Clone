@@ -5,9 +5,33 @@ import AllQuestions from "./AllQuestions";
 import { Link } from "react-router-dom";
 // import axios from "axios";
 
-function Main({ questions }) {
-  // const [questions, setQuestions] = useState([]);
 
+// new component Added
+import FilterTag from "./FilterTags/FilterTag";
+import { useState } from "react";
+
+function Main({ questions, searchInput, selectedTags }) {
+  // const [questions, setQuestions] = useState([]);
+  const [tag, setTag] = useState([]);
+
+  const handleTagChange = (value) => {
+    setTag(value);
+    console.log("main-->",searchInput,selectedTags);
+  };
+  const filterQuestions = (question) => {
+    // Parse the stringified JSON array back to an actual array
+    const tagsArray = JSON.parse(question.tags);
+    console.log("main-->",searchInput,selectedTags);
+    // Add your filtering logic here based on searchInput and selectedTags
+    // For example, you can use includes() to filter based on searchInput
+    const matchSearch = question.title.toLowerCase().includes(searchInput.toLowerCase());
+
+    // Check if selectedTags is defined and if the question has at least one of the selectedTags
+    const matchTags = selectedTags && selectedTags.some(tag => tagsArray.includes(tag));
+
+    // Return true only if either search or tag criteria are met
+    return matchSearch || matchTags;
+  };
   // console.log(questions);
   return (
     <div className="main">
@@ -17,7 +41,7 @@ function Main({ questions }) {
           <Link to="/add-question">
             <button>Ask Question</button>
           </Link>
-
+          
           {/* <a href="/add-question"> */}
 
           {/* </a> */}
@@ -42,12 +66,13 @@ function Main({ questions }) {
             </div>
             <div className="main-filter-item">
               <FilterListIcon />
-              <p>Filter</p>
+              Filter
+              {/* <FilterTag onTagsChange={handleTagChange}/> */}
             </div>
           </div>
         </div>
         <div className="questions">
-          {questions?.map((_q) => (
+          {questions.filter(filterQuestions).map((_q) => (
             <div className="question">
               <AllQuestions data={_q} />
             </div>
