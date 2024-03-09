@@ -23,7 +23,7 @@ import { Link } from "react-router-dom";
 
 export default function NestedList({ onPageChange }) {
   const [open, setOpen] = React.useState(true);
-
+  
   const handleClick = () => {
     setOpen(!open);
   };
@@ -90,6 +90,13 @@ export default function NestedList({ onPageChange }) {
                   <GroupIcon />
                 </ListItemIcon>
                 <ListItemText primary="Users" />
+          </ListItemButton>
+
+          <ListItemButton sx={{ pl: 4 }} onClick={() => handlePageChange('Posts')}>
+                <ListItemIcon>
+                  <GroupIcon />
+                </ListItemIcon>
+                <ListItemText primary="Your Posts" />
           </ListItemButton>
         </List>
       </Collapse>

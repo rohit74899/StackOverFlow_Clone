@@ -19,13 +19,17 @@
     "firebase": "^9.6.1",
     "highlight.js": "^11.2.0",
     "react": "^17.0.2",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^17.0.2",
     "react-html-parser": "^2.0.2",
+    "react-icons": "^5.0.1",
     "react-quill": "^1.3.5",
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-syntax-highlighter": "^15.5.0",
     "react-tag-input-component": "^1.0.7",
+    "react-toastify": "^10.0.4",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

@@ -34,7 +34,7 @@ import Home from './Pages/Home';
 import Questions from './Pages/Questions'
 import Community from './Pages/Community';
 import Users from './Pages/Users'
-
+import Posts from './Pages/Posts'
 
 import FilterTag from './FilterTags/FilterTag';
 import Stack from '@mui/material/Stack';
@@ -112,7 +112,7 @@ const handleSearchClick_ForPreferedTags = () => {
                           console.log(questionTags[0]);
                           // Check for the existence of the tag
                           const hasTag =
-                              tag.length === 0 || questionTags[0].includes(arrayOfStrings[0]);
+                              selectedTags.length === 0 || questionTags[0].includes(arrayOfStrings[0]);
 
                           const matchesSearch =
                               searchInput.trim() === '' ||
@@ -177,47 +177,75 @@ const handleSearchClick_ForPreferedTags = () => {
           <Main questions={filteredQuestions} searchInput={searchInput} />
         ) : page === 'Users' ? (
           <Users searchInput={searchInput} />
+        ): page === 'Posts' ? (
+          <Posts searchInput={searchInput} />
         ) : null}
                 
-                
-                
-                
+                       
         </Grid>
         <Grid item xs={2} sx={{marginTop:18}}>
           
           
           {/* <FilterTag onTagsChange={handleTagChange} onSearchChange={handleSearchChange} onSearchClick={handleSearchClick}/> */}
-          <Stack direction="row" spacing={1}>
-      <Autocomplete
-        multiple
-        limitTags={2}
-        id="single-limit-tags"
-        options={ptags}
-        getOptionLabel={(option) => option}
-        defaultValue={[]}
-        renderInput={(params) => (
-          <TextField {...params} label="search" placeholder="Search by Tags" />
-        )}
-        onChange={handleTagChange_ForPreferedTags}
-        sx={{ width: '200px' }}
-      />
-      
-    </Stack>
-    <Button variant="contained" endIcon={<SearchIcon />} sx={{ marginLeft: 8, marginTop: 2 }} onClick={() => handleSearchClick('FilteredQ')}></Button>
-          <input
-          type="text"
-          placeholder="Enter tags"
-          value={tag.join(',')}
-          onChange={(e) => setTag(e.target.value.split(','))}
-          style={{ marginTop: '10px', width: '80%', padding: '5px' }}
+          
+            {/* page!='Tags' || page!='Users' || page!='Community'?( */}
+
+            {page === 'Posts' || page==='Tags' || page==='Users'? (
+              null
+        ) :<>
+        <Stack direction="row" spacing={1}>
+        <Autocomplete
+          multiple
+          limitTags={2}
+          id="single-limit-tags"
+          options={ptags}
+          getOptionLabel={(option) => option}
+          defaultValue={[]}
+          renderInput={(params) => (
+            <TextField {...params} label="search" placeholder="Search by Tags" />
+          )}
+          onChange={handleTagChange_ForPreferedTags}
+          sx={{ width: '200px' }}
         />
+        
+      </Stack>
+      <Button variant="contained" endIcon={<SearchIcon />} sx={{ marginLeft: 0, marginTop: 2 }} onClick={() => handleSearchClick('FilteredQ')}>All Q</Button>
+      <Button variant="contained" endIcon={<SearchIcon />} sx={{ marginLeft: 4, marginTop: 2 }} onClick={() => handleSearchClick('FilteredQ')}></Button>
+
+      </>}
+            
+              
+            
+          
+                  
+          
+
+          
+          {
+
+            // This is important should not be removed even though it has no use
+            page==='xxxx'?(
+              <>
+              <input
+                type="text"
+                placeholder="Enter tags"
+                value={tag.join(',')}
+                onChange={(e) => setTag(e.target.value.split(','))}
+                style={{ marginTop: '10px', width: '80%', padding: '5px' }}
+              />
+              
+              <button onClick={handleSearchClick} style={{ marginTop: '10px', padding: '5px' }}>
+                Search
+              </button>
+              </>
+              
+            ):null
+          }
+          
 
 
         
-        {/* Add a submit button */}
-        <button onClick={handleSearchClick} style={{ marginTop: '10px', padding: '5px' }}>
-          Search
-        </button>
+        
         </Grid>
     
     </Grid>

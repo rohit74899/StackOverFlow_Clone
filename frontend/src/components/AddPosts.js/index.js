@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 
 
 // New components added
-import Cs from "./Cs"
+import Cs from "./Cs";
 
 import Stack from '@mui/material/Stack';
 // import ChipsArray from "./TagsInput";
@@ -117,7 +117,7 @@ function Index() {
               <div className="title">
                 <h3>Title</h3>
                 <small>
-                  Be specific and imagine you’re asking a question to another
+                  Be specific and imagine you're asking a question to another
                   person
                 </small>
                 <input
