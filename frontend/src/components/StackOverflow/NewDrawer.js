@@ -13,6 +13,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import AddCardIcon from '@mui/icons-material/AddCard';
+import PostAddIcon from '@mui/icons-material/PostAdd';
 
 
 // new Components Added
@@ -29,6 +31,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
 // New Component Test
+import { Link } from "react-router-dom";
 import Tags from './Pages/Tags'
 import Home from './Pages/Home';
 import Questions from './Pages/Questions'
@@ -190,9 +193,22 @@ const handleSearchClick_ForPreferedTags = () => {
           
             {/* page!='Tags' || page!='Users' || page!='Community'?( */}
 
-            {page === 'Posts' || page==='Tags' || page==='Users'? (
+        {page==='Tags' || page==='Users'? (
               null
-        ) :<>
+        ) :page==='Posts'?(
+        
+        <Stack>
+          Add a Post 
+          <Link to="/add-post">
+          
+          <button><PostAddIcon/></button>
+          
+          </Link>
+        </Stack>
+        
+        
+        ):
+      <>
         <Stack direction="row" spacing={1}>
         <Autocomplete
           multiple

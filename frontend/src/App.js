@@ -8,6 +8,7 @@ import {
 import StackOverflow from "./components/StackOverflow";
 import Header from "./components/Header";
 import AddQuestion from "./components/AddQuestion";
+import AddPost from "./components/AddPosts";
 import ViewQuestion from "./components/ViewQuestion";
 import Tags from "./components/StackOverflow/Pages/Tags";
 import Auth from "./components/Auth";
@@ -66,6 +67,7 @@ function App() {
           <Route exact path="/auth" component={Auth} />
           <PrivateRoute exact path="/" component={StackOverflow} />
           <PrivateRoute exact path="/add-question" component={AddQuestion} />
+          <PrivateRoute exact path="/add-post" component={AddPost} />
           <PrivateRoute exact path="/question" component={ViewQuestion} />
           <PrivateRoute exact path="/tags" component={Tags} />
         </Switch>

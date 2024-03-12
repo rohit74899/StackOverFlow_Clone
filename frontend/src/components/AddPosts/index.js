@@ -72,6 +72,7 @@ function Index() {
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [code, setcode] =useState(" ");
   const [tag, setTag] = useState([]);
   const history = useHistory();
 
@@ -90,26 +91,28 @@ function Index() {
       const bodyJSON = {
         title: title,
         body: body,
+        code: code,
         tag: JSON.stringify(tag),
         user: user,
       };
-      await axios
-        .post("/api/question", bodyJSON)
-        .then((res) => {
-          // console.log(res.data);
-          alert("Question added successfully");
-          history.push("/");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      console.log("data collected :", bodyJSON);
+      // await axios
+      //   .post("/api/question", bodyJSON)
+      //   .then((res) => {
+      //     // console.log(res.data);
+      //     alert("Question added successfully");
+      //     history.push("/");
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
     }
   };
   return (
     <div className="add-question">
       <div className="add-question-container">
         <div className="head-title">
-          <h1>Ask a public question</h1>
+          <h1>Ask a public Post</h1>
         </div>
         <div className="question-container">
           <div className="question-options">
@@ -132,8 +135,7 @@ function Index() {
               <div className="title">
                 <h3>Body</h3>
                 <small>
-                  Include all the information someone would need to answer your
-                  question
+                  Content About Your Post
                 </small>
                 <ReactQuill
                   value={body}
@@ -144,6 +146,25 @@ function Index() {
                 />
               </div>
             </div>
+
+            {/* Code Section Added */}
+            <div className="question-option" >
+              <div className="title">
+                <h3>Code Section</h3>
+                <small>
+                  Code 
+                </small>
+                <ReactQuill
+                  value={code}
+                  onChange={(value) => setcode(value)}
+                  // modules={Editor.modules}
+                  className="react-quill"
+                  theme="snow"
+                  style={{ backgroundColor: 'black', color:'green'}}
+                />
+              </div>
+            </div>
+
             <div className="question-option">
               <div className="title">
 
@@ -154,13 +175,6 @@ function Index() {
                   ADD TAGS HERE
                 </small>
                
-
-                {/* <TagsInput
-                  value={tag}
-                  onChange={setTag}
-                  name="fruits"
-                  placeHolder="press enter to add new tag"
-                /> */}
                 
                 <Cs onTagsChange={handleTagChange} />
                 </Stack>
@@ -172,7 +186,7 @@ function Index() {
         </div>
 
         <button onClick={handleSubmit} className="button">
-          Add your question
+          Add your Post
         </button>
       </div>
     </div>
