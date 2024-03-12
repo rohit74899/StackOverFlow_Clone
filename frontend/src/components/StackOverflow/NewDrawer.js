@@ -47,8 +47,11 @@ import SearchIcon from '@mui/icons-material/Search';
 
 const drawerWidth = 210;
 
-export default function ClippedDrawer({questions}) {
+export default function ClippedDrawer({questions,posts}) {
   
+  console.log(questions);
+  console.log(posts);
+
   
   // for prefere Tags input
   const [ptags, setpTags] = useState(["c++", "java", "npm", "error", "DSA","JDK","DP","NodeJs","Maths","Marathi","Hindi"]);
@@ -181,7 +184,7 @@ const handleSearchClick_ForPreferedTags = () => {
         ) : page === 'Users' ? (
           <Users searchInput={searchInput} />
         ): page === 'Posts' ? (
-          <Posts searchInput={searchInput} />
+          <Posts searchInput={searchInput} posts={posts}/>
         ) : null}
                 
                        

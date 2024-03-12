@@ -4,8 +4,12 @@ import "./css/index.css";
 import Main from "./Main";
 import axios from "axios";
 import NewDrawer from "./NewDrawer";
+import Posts from "./Pages/Posts";
+
 function Index() {
   const [questions, setQuestions] = useState([]);
+  const [posts, setPosts] = useState([]);
+
 
   useEffect(() => {
     async function getQuestion() {
@@ -13,8 +17,19 @@ function Index() {
         setQuestions(res.data.reverse());
         console.log(res.data)
       });
+      
     }
     getQuestion();
+  }, []);
+
+  useEffect(() => {
+    async function getPosts() {
+      await axios.get("/api/post").then((res) => {
+        setPosts(res.data.reverse());
+        console.log(res.data)
+      });
+    }
+    getPosts();
   }, []);
   
   return (
@@ -22,7 +37,8 @@ function Index() {
       <div className="stack-index-content">
         {/* <Sidebar /> */}
         {/* <Main questions={questions} /> */}
-        <NewDrawer questions={questions}/>
+        <NewDrawer questions={questions} posts={posts}/>
+        {/* <Posts questions={questions} posts={posts}/> */}
       </div>
     </div>
   );
