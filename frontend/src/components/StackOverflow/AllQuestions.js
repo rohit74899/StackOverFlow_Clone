@@ -67,9 +67,11 @@ function AllQuestions({ data }) {
               <p>
                 {data?.user?.displayName
                   ? data?.user?.displayName
-                  : data?.user?.email
-                  ? data?.user?.email
+                  : data?.user?.email.split('@')[0]
+                  ? data?.user?.email.split('@')[0]
                   : "Default Username"}
+
+
               </p>
             </div>
           </div>

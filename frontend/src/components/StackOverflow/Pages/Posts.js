@@ -19,14 +19,20 @@ import stack from '@mui/material/Stack';
 // 12 March
 import ReactHtmlParser from "react-html-parser";
 
+import { useSelector } from 'react-redux';
+// import { selectUser } from '../../redux/userSlice';
+import { selectUser } from "../../../feature/userSlice";
 
-const Posts = ({posts}) => {
+const Posts = ({posts,questions}) => {
 
     function truncate(str, n) {
         return str?.length > n ? str.substr(0, n - 1) + "..." : str;
     }
     console.log(posts);
 
+    // To get the current user
+    const currentUser = useSelector(selectUser);
+    console.log(currentUser);
     const [bt,setbt]=useState(0);
 
             
@@ -111,79 +117,66 @@ const Posts = ({posts}) => {
                   
                         </div>
                     ))
-                ):<>You havent Asked Question!!!</>
-            
-            }
-            {/* {
-                bt===1? (
-                    data.posts.map((post, index) => (
-                        <div key={index}>
-                                  <Accordion >
-                                    <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
-                                    aria-controls="panel1-content"
-                                    id="panel1-header"
-                                    >
-                                    <Stack direction="row" spacing={2}>
-                                    <Typography>{post.Title}</Typography>
-                                    <Typography variant="caption" display="block" gutterBottom>({post.Date})</Typography>
-                                    </Stack>
-                                    
-                                    </AccordionSummary>
-                                    <AccordionDetails>
-                                        <>
-                                                    <Container fixed>
-                                                        
-            
-                                                        <Paper elevation={0}>
-                                                                <Typography variant="h4" gutterBottom>
-                                                                {post.Title}
-                                                                </Typography>
-                                                                <div
-                                                                        style={{
-                                                                        display: "flex",
-                                                                        }}
-                                                                    >
-                                                                        {post.Tags.map((_tag) => (
-                                                                        <p
-                                                                            style={{
-                                                                            margin: "10px 5px",
-                                                                            padding: "5px 10px",
-                                                                            backgroundColor: "#007cd446",
-                                                                            borderRadius: "3px",
-                                                                            }}
-                                                                        >
-                                                                            {_tag}
-                                                                        </p>
-                                                                        ))}
-                                                                </div>
-                                                                <Typography variant="H6" gutterBottom>
-                                                                {post.Body}
-                                                                </Typography>
-                                                        </Paper>
-                                                        <Paper elevation={1}>
-                                                                
-                                                                <Box sx={{ bgcolor: 'black', color:'green'}} >
-                                                                    
-            
-                                                                    {post.code}
-            
-            
-                                                                </Box>
-                                                                
-                                                        </Paper>
+                ):questions.filter((que) => que.user.uid === currentUser.uid).map((que, index) => (
+                    <div key={index}>
+                              <Accordion >
+                                <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1-content"
+                                id="panel1-header"
+                                >
+                                <Stack direction="row" spacing={2}>
+                                <Typography>{que.title}</Typography>
+                                <Typography variant="caption" display="block" gutterBottom>({que.created_at})</Typography>
+                                <Typography variant="caption" display="block" gutterBottom>{que.user.email.split('@')[0]}</Typography>
+                                </Stack>
+                                
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <>
+                                        <Container fixed>
                                                     
-                                                </Container>
-                                        </>
-                                    
-                                    </AccordionDetails>
-                            </Accordion>
-                  
-                        </div>
-                    ))
-                ):<>You havent Asked Question!!!</>
+        
+                                                <Paper elevation={0}>
+                                                            <Typography variant="h4" gutterBottom>
+                                                            {que.title}
+                                                            </Typography>
+                                                            <div
+                                                                    style={{
+                                                                    display: "flex",
+                                                                    }}
+                                                                >
+                                                                    {JSON.parse(que.tags[0]).map((_tag) => (
+                                                                <p
+                                                                    style={{
+                                                                        margin: "10px 5px",
+                                                                        padding: "5px 10px",
+                                                                        backgroundColor: "#007cd446",
+                                                                        borderRadius: "3px",
+                                                                    }}
+                                                                >
+                                                                    {_tag}
+                                                                </p>
+                                                            ))}
+                                                            </div>
+                                                            <Typography variant="H6" gutterBottom>
+                                                            {ReactHtmlParser((que.body))}
+                                                            </Typography>
+                                                    </Paper>
+                                                    
+                                                
+                                            </Container>
+                                    </>
+                                
+                                </AccordionDetails>
+                        </Accordion>
+              
+                    </div>
+                ))
+            
             }
-       */}
+            
+       
       
     </>
   )

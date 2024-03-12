@@ -184,7 +184,7 @@ const handleSearchClick_ForPreferedTags = () => {
         ) : page === 'Users' ? (
           <Users searchInput={searchInput} />
         ): page === 'Posts' ? (
-          <Posts searchInput={searchInput} posts={posts}/>
+          <Posts searchInput={searchInput} posts={posts} questions={questions}/>
         ) : null}
                 
                        
