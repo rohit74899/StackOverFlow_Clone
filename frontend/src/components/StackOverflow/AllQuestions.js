@@ -67,7 +67,9 @@ function AllQuestions({ data }) {
               <p>
                 {data?.user?.displayName
                   ? data?.user?.displayName
-                  : "Natalie lee"}
+                  : data?.user?.email
+                  ? data?.user?.email
+                  : "Default Username"}
               </p>
             </div>
           </div>
