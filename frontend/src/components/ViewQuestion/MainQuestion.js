@@ -189,7 +189,9 @@ function MainQuestion() {
                   <p>
                     {questionData?.user?.displayName
                       ? questionData?.user?.displayName
-                      : "Natalia lee"}
+                      : questionData?.user?.email
+                      ? questionData?.user?.email
+                      : "Default Username"}
                   </p>
                 </div>
               </div>
@@ -288,7 +290,9 @@ function MainQuestion() {
                       <p>
                         {_q?.user?.displayName
                           ? _q?.user?.displayName
-                          : "Natalia lee"}
+                          :  _q?.user?.email
+                          ? _q?.user?.email
+                          : "Default Username"}
                       </p>
                     </div>
                   </div>

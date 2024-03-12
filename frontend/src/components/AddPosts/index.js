@@ -96,16 +96,16 @@ function Index() {
         user: user,
       };
       console.log("data collected :", bodyJSON);
-      // await axios
-      //   .post("/api/question", bodyJSON)
-      //   .then((res) => {
-      //     // console.log(res.data);
-      //     alert("Question added successfully");
-      //     history.push("/");
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
+      await axios
+        .post("/api/post", bodyJSON)
+        .then((res) => {
+          // console.log(res.data);
+          alert("Post added successfully");
+          history.push("/");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
   return (
