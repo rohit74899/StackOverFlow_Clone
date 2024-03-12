@@ -1,4 +1,5 @@
 import {
+  updateProfile,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -80,6 +81,12 @@ function Index() {
       setLoading(false);
     } else {
       createUserWithEmailAndPassword(auth, email, password)
+        .then((res)=>{
+          console.log("Username:", username);
+          updateProfile(res.user, {
+            displayName: username, // Assuming you have a username state
+          })
+        })
         .then((res) => {
           // console.log(res);
           history.push("/");
@@ -155,11 +162,21 @@ function Index() {
               <>
                 <div className="input-field">
                   <p>Email</p>
-                  <input type="text" />
+                  <input
+                    type="text"
+                    // Add the value attribute and onChange handler
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
                 </div>
                 <div className="input-field">
                   <p>Password</p>
-                  <input type="password" />
+                  <input
+                    type="password"
+                    // Add the value attribute and onChange handler
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
                 </div>
                 <button
                   onClick={handleSignIn}
