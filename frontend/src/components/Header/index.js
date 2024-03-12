@@ -75,7 +75,7 @@ function Header() {
           {/* ICON FIELD */}
           
               <Stack spacing={-1} style={{ fontSize: '20px'}}>
-                    <FilterHdrIcon color='#d81b60' style={{fontSize:'inherit' , fontSize: '50px'}}/>
+                    <FilterHdrIcon color='#d81b60' style={{fontSize:'inherit' , fontSize: '38px'}}/>
 
                     <Paper elevation={0} style={{backgroundColor:blue[300]}}> <h3>Coder's Battle Room</h3></Paper>
               </Stack>
